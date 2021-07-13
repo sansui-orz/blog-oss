@@ -64,3 +64,12 @@ exports.writeFileFail = (error) => {
   console.log(chalk.bold(chalk.red('【部署失败】')));
   console.log(chalk.red(`  写入文件失败: ${error}`));
 };
+
+exports.initProjectFail = (error) => {
+  console.log(chalk.bold(chalk.red('【初始化失败】')));
+  console.log(chalk.red(`  请输入项目名称，例:
+      blog-oss i yourProjectName 或
+      blog-oss init yourProjectName 或
+      blog-oss yourProjectName
+  `));
+};
