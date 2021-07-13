@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= config.name %></title>
+  <link rel="shortcut icon" href="./m.ico" type="image/x-icon" />
+  <link rel="icon" href="./m.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://www.lmsdelck.xyz/blog/css/style.css">
+  <link rel="prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css" as="style">
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" as="style">
+  <link rel="prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js" as="script">
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" as="script">
+  <style>
+    html, body {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      font-weight: 300;
+      color: #333;
+    }
+    header {
+      font-size: 24px;
+      text-align: center;
+      padding-top: 20px;
+      text-decoration: underline;
+    }
+
+    header a {
+      color: inherit;
+    }
+
+    .body {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .content {
+      width: 60%;
+      min-width: 600px;
+      max-width: 800px;
+      margin-right: 30px;
+      box-sizing: border-box;
+      display: inline-block;
+    }
+
+    .content img {
+      max-width: 100%;
+    }
+
+    .home ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .home li {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .home ul ul {
+      border-left: 1px dashed #333;
+      margin-left: 8px;
+    }
+
+    .home li li {
+      padding-left: 10px;
+      position: relative;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 40px;
+    }
+
+    .home li li::before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      box-sizing: border-box;
+      border: 1px dashed red;
+      border-radius: 50%;
+      left: -5px;
+      transform: translateY(-50%);
+      background: white;
+    }
+
+    .home li a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    .slogan {
+      text-align: center;
+    }
+
+    @media screen and (max-width: 900px) {
+      .content {
+        margin-right: 0;
+      }
+    }
+
+    @media screen and (max-width: 800px) {
+      .content {
+        min-width: auto;
+        width: 100%;
+        padding: 0 20px;
+      }
+
+      .home {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+
+<body data-version="1.0.0">
+  <header><%= config.name %></header>
+  <p class="slogan"><%= config.slogen %></p>
+  <div class="body home">
+    <ul>
+      <% list.forEach(function(item) { %>
+        <li><%- item.year %>
+          <ul>
+            <% item.subList.forEach(function(subItem) { %>
+              <li>
+                <span><%- subItem.month %> <%- subItem.day %></span>
+                &nbsp;&nbsp;/&nbsp;&nbsp;
+                <a href="./article/<%- subItem.id %>.html"><%- subItem.title %></a>
+              </li>
+            <% }); %>
+          </ul>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</body>
+
+</html>

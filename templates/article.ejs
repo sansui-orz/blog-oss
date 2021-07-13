@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%- title %> - <%- config.name %></title>
+  <link rel="shortcut icon" href="../m.ico" type="image/x-icon" />
+  <link rel="icon" href="../m.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://www.lmsdelck.xyz/blog/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <style>
+    html, body {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      font-weight: 300;
+      color: #333;
+    }
+    header {
+      font-size: 24px;
+      text-align: center;
+      padding-top: 20px;
+      text-decoration: underline;
+    }
+
+    header a {
+      color: inherit;
+    }
+
+    .body {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .content {
+      width: 60%;
+      min-width: 600px;
+      max-width: 800px;
+      margin-right: 30px;
+      box-sizing: border-box;
+      display: inline-block;
+    }
+
+    .content img {
+      max-width: 100%;
+    }
+
+    aside {
+      width: 200px;
+      background: #f3f3f3;
+      border-radius: 10px;
+      flex-shrink: 0;
+      min-height: 100px;
+      position: sticky;
+      margin-top: 50px;
+      top: 50px;
+      float: right;
+      padding: 10px 0;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    pre {
+      width: 100%;
+      overflow: auto;
+    }
+
+
+    .slogan {
+      text-align: center;
+    }
+
+    @media screen and (max-width: 900px) {
+      aside {
+        display: none;
+      }
+
+      .content {
+        margin-right: 0;
+      }
+    }
+
+    @media screen and (max-width: 800px) {
+      .content {
+        min-width: auto;
+        width: 100%;
+        padding: 0 20px;
+      }
+    }
+
+    #gitalk-container {
+      width: 640px;
+      max-width: 100vw;
+      padding: 20px;
+      box-sizing: border-box;
+      margin: 0 auto;
+    }
+
+    .menu-1,
+    .menu-2,
+    .menu-3 {
+      padding: 2px 20px;
+      color: black;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .menu-2 {
+      padding-left: 30px;
+    }
+
+    .menu-3 {
+      padding-left: 40px;
+    }
+
+    .menu-1 a,
+    .menu-2 a,
+    .menu-3 a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .create-time {
+      font-size: 12px;
+      color: #ccc;
+      text-align: right;
+      padding: 4px;
+    }
+
+    .tags {
+      text-align: center;
+      padding: 15px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header><a href="/blog/"><%- config.name %></a></header>
+  <div class="tags"><%- tags.join(' / '); %></div>
+  <div class="body">
+    <div class="content"><%- body %></div>
+    <aside>
+      <% menu.forEach(function(item) { %>
+        <div class="menu-<%- item.level %>"><a href="#<%- item.id %>"><%- item.title %></a></div>
+      <% }); %>
+    </aside>
+    <div class="create-time">发表于: <%- year %>-<%- month %>-<%- day %></div>
+    <hr />
+  </div>
+  <div id="gitalk-container"></div>
+  <script>
+    function initGitalk() {
+      var gitalk = new Gitalk({
+        id: <%- id %>,
+        distractionFreeMode: false,
+        ...JSON.parse(<%- JSON.stringify(config.gitalk) %>)
+      });
+      gitalk.render('gitalk-container');
+    }
+  </script>
+  <script async onload="hljs.highlightAll();" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+  <script async onload="initGitalk();" src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</body>
+
+</html>

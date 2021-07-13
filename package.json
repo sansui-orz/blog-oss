@@ -1,0 +1,32 @@
+{
+  "name": "blog-oss",
+  "version": "0.0.1",
+  "description": "一个将github的markdown博客转换发布到阿里云OSS的工具库",
+  "main": "index.js",
+  "bin": {
+    "blog-oss": "index.js"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sansui-orz/blog-oss.git"
+  },
+  "author": "Michael",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sansui-orz/blog-oss/issues"
+  },
+  "homepage": "https://github.com/sansui-orz/blog-oss#readme",
+  "dependencies": {
+    "@octokit/core": "^3.5.1",
+    "ali-oss": "^6.15.2",
+    "chalk": "^4.1.1",
+    "clear": "^0.1.0",
+    "commander": "^8.0.0",
+    "ejs": "^3.1.6",
+    "figlet": "^1.5.0",
+    "inquirer": "^8.1.1",
+    "lodash": "^4.17.21",
+    "markdown-into-html": "^1.0.3"
+  }
+}
