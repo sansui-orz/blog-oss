@@ -17,21 +17,26 @@ $ npm install blog-oss -g
 
 ### 初始化博客
 
-[doing]
 ```sh
 $ blog-oss your-project-name
 ```
 
 ### 一键部署到阿里云OSS
 
-✅
 ```sh
 $ blog-oss deploy
 ```
 
-### 构建到本地
+#### 自动化部署 [开发中]
 
-[doing]
+```sh
+$ npm run publish
+```
+
+基于Github Actions自动化部署，这块需要将敏感信息提取到Github Actions secrets中。
+
+### 构建到本地 [开发中]
+
 ```sh
 $ blog-oss build
 ```
@@ -42,18 +47,18 @@ $ blog-oss build
 
 ## 功能规划
 
-待完善的功能有:
+#### 待完善的功能有:
 
-[] 支持打包输出到本地
-[] 打通Gitalk评论
-[] 打包流程hooks
-[] 支持一剑发布到google drive
-[] 支持一键发布到github gist
-[] 支持博文访问打点（寻找免费服务）
+- [] 支持打包输出到本地
+- [] 打通Gitalk评论
+- [] 打包流程hooks
+- [] 支持一剑发布到google drive
+- [] 支持一键发布到github gist
+- [] 支持博文访问打点（寻找免费服务）
 
-已支持功能
+#### 已支持功能
 
-✅ markdown转html
-✅ 一键发布到阿里云OSS
-✅ 自定义页面模版文件
+- ✅ markdown转html
+- ✅ 一键发布到阿里云OSS
+- ✅ 自定义页面模版文件
 
