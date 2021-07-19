@@ -5,41 +5,15 @@ const { readFile } = require('fs/promises');
 const fs = require('fs');
 const { getFileIfExist } = require('./fsTools');
 const { readmeIsUndefined, parseArticleFail } = require('./errorLog');
-const { Octokit } = require('@octokit/core');
 const readline = require('readline');
 const _crypto = require('crypto');
 const { once } = require('events');
 
-// const octokit = new Octokit({ auth: token });
 
 /**
  * @typedef { import('./types.js').ArticleInfo } ArticleInfo
  * @typedef { import('./types.js').IndexMenu } IndexMenu
  */
-
-/**
- * 创建文章关联issue，用于Gitalk评论组件
- * @param {string} title
- * @param {string} id
- */
-const createArticlesIssues = async (title, id) => {
-  // try {
-  //   await octokit.request('POST /repos/sansui-orz/blog/issues', {
-  //     owner: 'sansui-orz',
-  //     repo: 'blog',
-  //     title: `【${title}】的评论`,
-  //     body: `使用github api统一生成: https://docs.github.com/en/rest/reference/issues#create-an-issue
-  //     进入博客拥有更好体验: https://www.lmsdelck.xyz/blog/article/${id}`,
-  //     labels: ['Gitalk', id]
-  //   });
-  // } catch {
-
-  // }
-  // 关联创建的issues
-  console.log('关联创造的issues', title, id);
-};
-
-exports.createArticlesIssues = createArticlesIssues;
 
 /**
  * 解析具体的markdown文章，得到标题与目录
@@ -103,7 +77,6 @@ exports.getMenuFromReadme = async () => {
       const id = _crypto.createHash('md5').update(_matchObj[1]).digest('hex');
       const articleDetail = await matchArticleDetail(filepath, id);
 
-      // TODO: 创建issues
       return {
         id,
         ...articleDetail,

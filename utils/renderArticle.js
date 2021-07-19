@@ -17,12 +17,8 @@ const articleTemplatePath = path.resolve(__dirname, '../templates/article.ejs');
  * @return {string}
  */
 const decoreteHtml = (htmlStr) => {
-  // TODO: 这里的oss域名后面需要更改掉才行
-  // TODO: 这里的demos地址应该直接写死github的地址
   return htmlStr
-    .replace(/"\.\/imgs\//g, '"https://lms-flies.oss-cn-guangzhou.aliyuncs.com/blog/imgs/')
     .replace(/language-tsx/g, 'javascript')
-    .replace(/\.\.\/demos/g, 'https://sansui-orz.github.io/blog/demos')
     .replace(/\.\/(.*)\.md/g, function (str, targetStr) {
       return str.replace(`${targetStr}.md`, crypto.createHash('md5').update(decodeURIComponent(targetStr)).digest('hex'));
     })

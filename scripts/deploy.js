@@ -11,6 +11,7 @@ const ejs = require('ejs');
 const getConfig = require('../utils/getConfig');
 const updateImages = require('../utils/updateImages');
 const crypto = require('crypto');
+const { Octokit } = require('@octokit/core');
 const {
   accessKeyIdIsUndefined,
   accessKeySecretIsUndefined,
@@ -22,15 +23,26 @@ const {
 
 const program = new Command();
 
+program.option('-oid, --oss-access-key-id <ossAccessKeyId>', '阿里云OSS AccessKeyId')
+  .option('-osecret, --oss-access-key-secret <ossAccessKeySecret>', '阿里云OSS AccessKeySecret')
+  .option('-gtoken, --github-personal-access-token <personalAccessToken>', 'Github OAuth Token');
+
 async function run() {
   try {
+
+    const options = program.opts();
+
+    console.log('查看options', options);
     const config = await getConfig();
+    const githubPersonalAccessToken = options.personalAccessToken || config.github.personalAccessToken;
+    delete config.github.personalAccessToken;
+    const octokit = new Octokit({ auth: githubPersonalAccessToken });
     console.log(chalk.green('博客开始构建,配置为: '), config);
-    if (!get(config, 'oss.accessKeyId')) {
+    if (!get(config, 'oss.accessKeyId') && !options.ossAccessKeyId) {
       accessKeyIdIsUndefined();
       return;
     }
-    if (!get(config, 'oss.accessKeySecret')) {
+    if (!get(config, 'oss.accessKeySecret') && !options.ossAccessKeySecret) {
       accessKeySecretIsUndefined();
       return;
     }
@@ -43,11 +55,12 @@ async function run() {
       return;
     }
     const { region, accessKeyId, accessKeySecret, bucketName } = config.oss;
-    const ossClient = createOssClient(region, accessKeyId, accessKeySecret, bucketName);
+    const ossClient = createOssClient(region, options.ossAccessKeyId || accessKeyId, options.ossAccessKeySecret || accessKeySecret, bucketName);
     // 将blog的相关信息存储在oss上。
     const blogConfigIsExist = await isExistObject('blog.online.config.json');
     let blogOnlineConfig = {};
     if (blogConfigIsExist) {
+      // @ts-ignore
       const res = await ossClient.get('blog.online.config.json')
       // @ts-ignore
       blogOnlineConfig = JSON.parse(res.res.data.toString());
@@ -85,12 +98,24 @@ async function run() {
     let updateArticleCount = 0;
     for (let i = 0; i < menu.length; i++) {
       for (let j = 0; j < menu[i].subList.length; j++) {
-        const articleHtml = await renderArticle(menu[i].subList[j].filepath, menu[i].subList[j], config);
+        const article = menu[i].subList[j];
+        const articleHtml = await renderArticle(article.filepath, article, config);
         const articleContentHash = crypto.createHash('md5').update(articleHtml).digest('hex');
-        if (blogOnlineConfig[menu[i].subList[j].id] !== articleContentHash) {
-          blogOnlineConfig[menu[i].subList[j].id] = articleContentHash;
-          updateArticleCount++;
-          await pushObject(`article/${menu[i].subList[j].id}.html`, articleHtml);
+        if (blogOnlineConfig[article.id] !== articleContentHash) {
+          try {
+            await pushObject(`article/${article.id}.html`, articleHtml);
+            await octokit.request(`POST /repos/${get(config, 'github.owner')}/${get(config, 'github.repo')}/issues`, {
+              owner: get(config, 'github.owner'), // github仓库所有者
+              repo: get(config, 'github.repo'), // github仓库名
+              title: `【${article.title}】的评论`, // issues的标题
+              body: `使用github api统一生成: https://docs.github.com/en/rest/reference/issues#create-an-issue`, // issues的内容
+              labels: ['Gitalk', article.id]
+            });
+            blogOnlineConfig[article.id] = articleContentHash;
+            updateArticleCount++;
+          } catch {
+            console.log(chalk.red('【更新文章异常】: 文章: ' + article.title));
+          }
         }
       }
     }
