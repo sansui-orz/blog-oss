@@ -2,8 +2,10 @@ const { readdir, readFile } = require('fs/promises');
 const { getImgList, pushObject } = require('./oss');
 const path = require('path');
 const chalk = require('chalk');
+const { createDirIfNotExit } = require('./fsTools');
 
 module.exports = async function updateImages() {
+  await createDirIfNotExit(path.resolve('images'));
   const onlineImages = (await getImgList()).objects;
   const localImages = await readdir(path.resolve('images'));
   for (let i = 0; i < localImages.length; i++) {

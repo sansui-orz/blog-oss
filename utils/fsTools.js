@@ -42,3 +42,15 @@ exports.createFile = async (filePath, data) => {
     writeFileFail(error);
   }
 };
+
+/**
+ * 如果没有这个文件夹，就创建它
+ * @param {string} filepath
+ */
+exports.createDirIfNotExit = async (filepath) => {
+  try {
+    await access(filepath, constants.R_OK);
+  } catch {
+    await mkdir(filepath);
+  }
+}
