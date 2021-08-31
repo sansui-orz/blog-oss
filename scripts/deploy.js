@@ -4,7 +4,6 @@ const { Command } = require('commander');
 const path = require('path');
 const { createOssClient, pushObject } = require('../utils/oss');
 const { getMenuFromReadme } = require('../utils/getMenuFromReadme');
-const { renderArticle } = require('../utils/renderArticle');
 const { get } = require('lodash');
 const chalk = require('chalk');
 const ejs2html = require('../utils/ejs2html');
