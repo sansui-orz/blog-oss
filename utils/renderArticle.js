@@ -4,6 +4,7 @@ const path = require('path');
 const ejs = require('ejs');
 const crypto = require('crypto');
 const { get } = require('lodash');
+const getConfig = require('./getConfig');
 
 const articleTemplatePath = path.resolve(__dirname, '../templates/article.ejs');
 
@@ -25,13 +26,13 @@ const decoreteHtml = (htmlStr) => {
 };
 
 /**
- *
- * @param {string} filePath
- * @param {ArticleInfo} articleInfo
- * @param {any} config
- * @return {Promise<string>}
+ * 将文章markdown渲染成html
+ * @param {string} filePath 文件路径
+ * @param {ArticleInfo} articleInfo 文章信息
+ * @return {Promise<string>} 返回html内容
  */
-exports.renderArticle = async (filePath, articleInfo, config) => {
+module.exports = async (filePath, articleInfo) => {
+  const config = getConfig()
   const htmlCode = await markdown2html({
     path: filePath,
     url: undefined,

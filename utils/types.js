@@ -18,6 +18,8 @@
  * @property {string[]} tags
  * @property {ArticleMenu} menu 目录
  * @property {string} filepath
+ * @property {string} contentHash
+ * @property {string} filename 文件名: 拼接规则为 {titleId}-{contentHash}-{issuesInited}
  */
 
 /**

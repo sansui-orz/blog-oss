@@ -54,3 +54,20 @@ exports.getImgList = async () => {
   });
   return result;
 }
+
+/**
+ * 获取所有文章
+ */
+exports.getArticles = async () => {
+  const result = await client.list({
+    prefix: 'article/'
+  });
+  return result;
+}
+
+/**
+ * 删除失效文章
+ */
+exports.delArticle = async (filename) => {
+  await client.delete(delArticle);
+}

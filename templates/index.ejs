@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= config.name %></title>
-  <link rel="shortcut icon" href="./m.ico" type="image/x-icon" />
-  <link rel="icon" href="./m.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="./assets/m.ico" type="image/x-icon" />
+  <link rel="icon" href="./assets/m.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="https://www.lmsdelck.xyz/blog/css/style.css">
-  <link rel="prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/default.min.css" as="style">
+  <link rel="prefetch" href="https://cdn.staticfile.org/highlight.js/10.7.1/styles/default.min.css" as="style">
   <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" as="style">
-  <link rel="prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js" as="script">
+  <link rel="prefetch" href="https://cdn.staticfile.org/highlight.js/10.7.1/highlight.min.js" as="script">
   <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" as="script">
   <style>
     html, body {
@@ -134,7 +134,7 @@
               <li>
                 <span><%- subItem.month %> <%- subItem.day %></span>
                 &nbsp;&nbsp;/&nbsp;&nbsp;
-                <a href="./article/<%- subItem.id %>.html"><%- subItem.title %></a>
+                <a href="./article/<%- subItem.filename %>.html"><%- subItem.title %></a>
               </li>
             <% }); %>
           </ul>

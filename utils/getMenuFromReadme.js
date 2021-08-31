@@ -47,6 +47,7 @@ const matchArticleDetail = async (filepath, id) => {
       }
     });
     await once(rl, 'close');
+    const contentHash = _crypto.createHash('md5').update(fileContent).digest('hex')
     return {
       year,
       month,
@@ -56,6 +57,9 @@ const matchArticleDetail = async (filepath, id) => {
       title,
       id,
       filepath,
+      contentHash: contentHash,
+      // 使用id + contentHash + issues状态的方式决定内容是否变更
+      filename: `${id}-${contentHash}-0` // 0: issues未初始化, 1: issues已初始化
     };
   } catch (error) {
     parseArticleFail(filepath, error);
@@ -84,6 +88,7 @@ exports.getMenuFromReadme = async () => {
         title: _matchObj[1]
       };
     });
+    // 将生成的目录进行排序，顺序为 最近 > 最久
     const sortList = (await Promise.all(list)).sort((pre, nxt) => {
       const arr = ['year', 'month', 'day'];
       for (let i = 0; i < 3; i++) {
