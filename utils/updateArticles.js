@@ -76,6 +76,7 @@ module.exports = async function (menu, params) {
         // 线上有这篇文章（内容有更新）
         const articleHasUpdate = ossArticlesList.find(item => item.id === article.id)
         if (articleHasUpdate) {
+          console.log('文章内容有更新: ', article.title)
           if (articleHasUpdate.initIssues === 1) {
             // 已经创建了issues
             article.filename = `${article.id}-${article.contentHash}-1`
@@ -87,12 +88,14 @@ module.exports = async function (menu, params) {
           // 删除线上多余文章
           delArticle(articleHasUpdate.originName)
         } else {
+          console.log('创建文章: ', article.title)
           // 没有这篇文章
           // 创建issues
           await createIssues(article)
           await updateArticle(article)
         }
       } else if (articleNoUpdate.initIssues === 0) {
+        console.log('给已有文章: ', article.title, ', 创建issues')
         // 有这篇文章，但是文章issues创建失败了(没有issues)
         const inited = await createIssues(article)
         if (inited) {
@@ -100,6 +103,8 @@ module.exports = async function (menu, params) {
           await updateArticle(article)
           delArticle(articleNoUpdate.originName)
         }
+      } else {
+        console.log('文章无变更: ', article.title)
       }
     }
   }

@@ -160,7 +160,7 @@
   <script>
     function initGitalk() {
       var gitalk = new Gitalk({
-        id: <%- id %>,
+        id: '<%- id %>',
         distractionFreeMode: false,
         ...JSON.parse(<%- JSON.stringify(config.github) %>)
       });

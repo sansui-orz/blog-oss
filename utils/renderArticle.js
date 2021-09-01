@@ -32,7 +32,7 @@ const decoreteHtml = (htmlStr) => {
  * @return {Promise<string>} 返回html内容
  */
 module.exports = async (filePath, articleInfo) => {
-  const config = getConfig()
+  const config = await getConfig()
   const htmlCode = await markdown2html({
     path: filePath,
     url: undefined,
