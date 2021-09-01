@@ -27,7 +27,7 @@ const matchArticleDetail = async (filepath, id) => {
     const fileContent = res.toString();
     const createMatch = fileContent.match(/\[create\]:(\d{4})-(\d{2})-(\d{2})/);
     const [_, year, month, day] = createMatch || [];
-    const tagMatch = fileContent.match(/\[tag\]:(.+)\n/);
+    const tagMatch = fileContent.match(/\[tag\]:(.+)[\n\r]/);
     const tags = tagMatch[1].split('|');
     const title = fileContent.match(/^#\s(.*)/)[1];
     const menu = [];
@@ -73,8 +73,8 @@ const matchArticleDetail = async (filepath, id) => {
  */
 exports.getMenuFromReadme = async () => {
   if (await getFileIfExist(path.resolve('README.md'))) {
-    const listStr = (await readFile(path.resolve('README.md'))).toString();
-    const matchObj = listStr.match(/- \[.+\]\(.+\.md\)\n/g);
+    const listStr = await readFile(path.resolve('README.md'), { encoding: 'utf-8' });
+    const matchObj = listStr.match(/-\s\[.+\]\(.+\.md\)[\n\r]/g);
     const list = matchObj.map(async item => {
       const _matchObj = item.match(/^-\s\[(.+)\]\((.+)\)/);
       const filepath = path.resolve(_matchObj[2]);

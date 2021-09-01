@@ -14,7 +14,7 @@ const renderArticle = require('./renderArticle')
  */
 async function initIssues(octokit, title, id) {
   try {
-    const config = getConfig()
+    const config = await getConfig()
     await octokit.request(`POST /repos/${get(config, 'github.owner')}/${get(config, 'github.repo')}/issues`, {
       owner: get(config, 'github.owner'), // github仓库所有者
       repo: get(config, 'github.repo'), // github仓库名
@@ -24,7 +24,7 @@ async function initIssues(octokit, title, id) {
     });
     return 1
   } catch(error) {
-    console.log(chalk.red('【创建issues失败】: 文章: ' + article.title))
+    console.log(chalk.red('【创建issues失败】: 文章: ' + title))
     console.log('error=>', error)
     return 0
   }
@@ -41,8 +41,9 @@ async function updateArticle(article) {
  * @param {{ githubPersonalAccessToken: string; }} params 额外参数
  */
 module.exports = async function (menu, params) {
+  const list = await getArticles()
   // 首先获取oss上的文章列表
-  const ossArticlesList = (await getArticles()).map(item => {
+  const ossArticlesList = list.objects.filter(item => /^article\/(\w+)-(\w+)-[01].html$/.test(item.name)).map(item => {
     const filename = item.name.split('/')[1].replace('.html', '')
     return {
       originName: item.name,
@@ -95,7 +96,7 @@ module.exports = async function (menu, params) {
         if (inited) {
           // 创建了issues，则更新文章并删除旧文件
           await updateArticle(article)
-          delArticle(articleHasUpdate.originName)
+          delArticle(articleNoUpdate.originName)
         }
       }
     }

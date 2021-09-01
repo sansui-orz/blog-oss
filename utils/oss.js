@@ -69,5 +69,5 @@ exports.getArticles = async () => {
  * 删除失效文章
  */
 exports.delArticle = async (filename) => {
-  await client.delete(delArticle);
+  await client.delete(filename);
 }
