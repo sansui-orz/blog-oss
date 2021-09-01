@@ -66,7 +66,7 @@ async function run() {
         config
       }
     )
-    await pushObject('index.html', indexHtml);
+    await pushObject('index.html', indexHtml, {});
     
     console.log(chalk.green('文章部署成功，开始上传图片资源'));
     await updateImages();

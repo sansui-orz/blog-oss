@@ -17,7 +17,9 @@ module.exports = async function updateImages() {
       }
     }
     if (!mark) {
-      await pushObject(`images/${localImages[i]}`, await readFile(path.resolve(`images/${localImages[i]}`)));
+      await pushObject(`images/${localImages[i]}`, await readFile(path.resolve(`images/${localImages[i]}`)), {
+        'Cache-Control': 'public, max-age=31536000'
+      });
       console.log(chalk.green(`上传图片: images/${localImages[i]}`));
     }
   }

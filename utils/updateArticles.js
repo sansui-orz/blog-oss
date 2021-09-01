@@ -32,7 +32,9 @@ async function initIssues(octokit, title, id) {
 
 async function updateArticle(article) {
   const articleHtml = await renderArticle(article.filepath, article);
-  await pushObject(`article/${article.filename}.html`, articleHtml)
+  await pushObject(`article/${article.filename}.html`, articleHtml, {
+    'Cache-Control': 'public, max-age=31536000'
+  })
 }
 
 /**

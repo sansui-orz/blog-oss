@@ -40,9 +40,10 @@ exports.isExistObject = async (name, options = {}) => {
  * 上传文件到oss
  * @param {string} fileName
  * @param {string | Buffer} data
+ * @param {{[key: string]: string}} headers
  */
-exports.pushObject = async (fileName, data) => {
-  await client.put(fileName, Buffer.isBuffer(data) ? data : Buffer.from(data));
+exports.pushObject = async (fileName, data, headers) => {
+  await client.put(fileName, Buffer.isBuffer(data) ? data : Buffer.from(data), { headers });
 };
 
 /**
