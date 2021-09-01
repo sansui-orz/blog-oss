@@ -1,6 +1,6 @@
 {
   "name": "blog-oss",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "一个将github的markdown博客转换发布到阿里云OSS的工具库",
   "main": "index.js",
   "bin": {

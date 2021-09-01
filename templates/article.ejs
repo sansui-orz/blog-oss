@@ -162,7 +162,7 @@
       var gitalk = new Gitalk({
         id: '<%- id %>',
         distractionFreeMode: false,
-        ...JSON.parse(<%- JSON.stringify(config.github) %>)
+        ...JSON.parse('<%- JSON.stringify(config.github) %>')
       });
       gitalk.render('gitalk-container');
     }
