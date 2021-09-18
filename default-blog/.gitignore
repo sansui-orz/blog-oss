@@ -1,3 +1,4 @@
 /configs/config.private.js
 /temp
+/dist
 node_modules

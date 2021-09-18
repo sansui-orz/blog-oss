@@ -47,7 +47,7 @@ module.exports = async (filePath, articleInfo) => {
       body: decoreteHtml(htmlCode),
       config
     },
-    { async: true },
+    // { async: true },
     function(err, str){
       // str => 输出渲染后的 HTML 字符串
       if (err) {

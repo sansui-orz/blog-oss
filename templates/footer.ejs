@@ -1,0 +1,11 @@
+  <div class="footer">
+    <% if (config.ICPCode) { %>
+      <span class="footer-a"><a href="http://www.beian.miit.gov.cn/"><%- config.ICPCode %></a></span>
+    <% } %>
+    <% if (config.githubAddress) { %>
+      <span class="footer-a"><a href="<%- config.githubAddress %>">Github</a></span>
+    <% } %>
+    <span class="footer-a"><a href="https://github.com/sansui-orz/blog-oss">blog-oss</a></span>
+  </div>
+</body>
+</html>

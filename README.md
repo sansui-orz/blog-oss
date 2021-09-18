@@ -29,13 +29,9 @@ $ blog-oss deploy
 
 #### 自动化部署 [开发中]
 
-```sh
-$ npm run publish
-```
+基于Github Actions自动化部署，这块需要将敏感信息提取到Github Actions secrets中。然后运行部署命令，则可自动将博客内容部署到阿里云oss上。
 
-基于Github Actions自动化部署，这块需要将敏感信息提取到Github Actions secrets中。
-
-### 构建到本地 [开发中]
+### 构建到本地
 
 ```sh
 $ blog-oss build

@@ -64,7 +64,6 @@ module.exports = async function (menu, params) {
   }
 
   // 对比更新所有oss上的内容
-  let updateArticleCount = 0;
   for (let i = 0; i < menu.length; i++) {
     for (let j = 0; j < menu[i].subList.length; j++) {
       const article = menu[i].subList[j];

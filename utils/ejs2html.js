@@ -10,7 +10,7 @@ module.exports = async function(templatePath, renderConfig) {
     return await new Promise((resolve, reject) => ejs.renderFile(
         templatePath,
         renderConfig,
-        { async: true },
+        // { async: true },
         function(err, str){
             if (err) {
                 return reject(err);

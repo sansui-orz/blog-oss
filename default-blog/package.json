@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "npx blog-oss build"
+  },
   "repository": {
     "type": "git",
     "url": ""

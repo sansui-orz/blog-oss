@@ -1,16 +1,18 @@
 module.exports = {
   // 博客基础信息
-  name: 'blog name',
-  selogen: '学如逆水行舟，不进则退',
-  // 初始化gitalk, 使用github的issue作评论服务。详情参照gitalk README: https://www.npmjs.com/package/gitalk
-  github: {
+  name: '页面title',
+  slogen: '页面slogen',
+  favicon: 'https://limaosheng.top/b.png', // tab图标，目前写死了png
+  ICPCode: '', // 备案号，无则不显示
+  githubAddress: '', // github地址，无则不显示
+  github: { // gitalk需要的信息
     clientID: '',
     clientSecret: '',
     repo: '',
     owner: '',
     admin: [''],
   },
-  oss: {
+  oss: { // 阿里云oss信息
     region: '',
     bucketName: ''
   }
