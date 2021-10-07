@@ -76,6 +76,8 @@ module.exports = async function (menu, params) {
         // 线上有这篇文章（内容有更新）
         const articleHasUpdate = ossArticlesList.find(item => item.id === article.id)
         if (articleHasUpdate) {
+          // 删除线上多余文章
+          delArticle(articleHasUpdate.originName)
           console.log('文章内容有更新: ', article.title)
           if (articleHasUpdate.initIssues === 1) {
             // 已经创建了issues
@@ -85,8 +87,6 @@ module.exports = async function (menu, params) {
             await createIssues(article)
           }
           await updateArticle(article)
-          // 删除线上多余文章
-          delArticle(articleHasUpdate.originName)
         } else {
           console.log('创建文章: ', article.title)
           // 没有这篇文章

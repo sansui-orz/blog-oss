@@ -5,6 +5,7 @@ const ejs = require('ejs');
 const crypto = require('crypto');
 const { get } = require('lodash');
 const getConfig = require('./getConfig');
+const cheerio = require('cheerio');
 
 const articleTemplatePath = path.resolve(__dirname, '../templates/article.ejs');
 
@@ -18,11 +19,19 @@ const articleTemplatePath = path.resolve(__dirname, '../templates/article.ejs');
  * @return {string}
  */
 const decoreteHtml = (htmlStr) => {
-  return htmlStr
+  const html = htmlStr
     .replace(/language-tsx/g, 'javascript')
     .replace(/\.\/(.*)\.md/g, function (str, targetStr) {
       return str.replace(`${targetStr}.md`, crypto.createHash('md5').update(decodeURIComponent(targetStr)).digest('hex'));
     })
+  const $ = cheerio.load(html);
+  ['h2', 'h3', 'h4'].forEach(tag => {
+    $(tag).each(function (i, elem) {
+      const id = crypto.createHash('md5').update($(this).text()).digest('hex');
+      $(this).attr('id', id);
+    });
+  })
+  return $.html();
 };
 
 /**

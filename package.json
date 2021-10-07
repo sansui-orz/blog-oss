@@ -21,6 +21,7 @@
     "@octokit/core": "^3.5.1",
     "ali-oss": "^6.15.2",
     "chalk": "^4.1.1",
+    "cheerio": "^1.0.0-rc.10",
     "clear": "^0.1.0",
     "commander": "^8.0.0",
     "ejs": "^3.1.6",
