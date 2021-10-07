@@ -59,7 +59,8 @@ const matchArticleDetail = async (filepath, id) => {
       filepath,
       contentHash: contentHash,
       // 使用id + contentHash + issues状态的方式决定内容是否变更
-      filename: `${id}-${contentHash}-0` // 0: issues未初始化, 1: issues已初始化
+      filename: `${id}-${contentHash}-0`, // 0: issues未初始化, 1: issues已初始化
+      hashId: `${id}-${contentHash}`
     };
   } catch (error) {
     parseArticleFail(filepath, error);

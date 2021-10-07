@@ -20,6 +20,7 @@
  * @property {string} filepath
  * @property {string} contentHash
  * @property {string} filename 文件名: 拼接规则为 {titleId}-{contentHash}-{issuesInited}
+ * @property {string} hashId 文件名+内容生成的hash id
  */
 
 /**

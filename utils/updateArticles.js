@@ -51,7 +51,8 @@ module.exports = async function (menu, params) {
       originName: item.name,
       filename: filename,
       id: filename.match(/^(\w+)-/)[1],
-      initIssues: +filename.match(/-(0|1)$/)[1]
+      initIssues: +filename.match(/-(0|1)$/)[1],
+      hashId: filename.replace(/-[01]$/, '')
     }
   })
 
@@ -69,7 +70,7 @@ module.exports = async function (menu, params) {
       const article = menu[i].subList[j];
 
       // 如果线上没有这篇文章(文件名强匹配, 有则标识文章未更新)，则上传并更新
-      const articleNoUpdate = ossArticlesList.find(item => item.filename === article.filename)
+      const articleNoUpdate = ossArticlesList.find(item => item.hashId === article.hashId)
       if (!articleNoUpdate) {
         // 根据文章id查找是否存在这篇文章的issues
         // 线上有这篇文章（内容有更新）
