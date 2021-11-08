@@ -104,6 +104,7 @@ module.exports = async function (menu, params) {
           delArticle(articleNoUpdate.originName)
         }
       } else {
+        article.filename = `${article.hashId}-1`
         console.log('文章无变更: ', article.title)
       }
     }
