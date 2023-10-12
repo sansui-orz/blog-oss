@@ -59,7 +59,7 @@
           <ul>
             <% item.subList.forEach(function(subItem) { %>
               <li>
-                <span><%- subItem.month %> <%- subItem.day %></span>
+                <span><%- subItem.month %>-<%- subItem.day %></span>
                 &nbsp;&nbsp;/&nbsp;&nbsp;
                 <a href="./article/<%- subItem.filename %>.html"><%- subItem.title %></a>
               </li>

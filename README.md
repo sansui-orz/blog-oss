@@ -39,7 +39,7 @@ $ blog-oss build
 
 ## 详细配置
 
-最终在项目中的configs文件夹下的所有config都将呗合并为一个config对象，例如:
+最终在项目中的configs文件夹下的所有config都将被合并为一个config对象，例如:
 
 ```js
 // config.default.js中
@@ -140,9 +140,8 @@ interface props {
 #### 待完善的功能有:
 
 - [] 支持打包输出到本地
-- [] 打通Gitalk评论
 - [] 打包流程hooks
-- [] 支持一剑发布到google drive
+- [] 支持一键发布到google drive
 - [] 支持一键发布到github gist
 - [] 支持博文访问打点（寻找免费服务）
 - [] 允许指定存放在oss bucket上的特定文件夹下
@@ -153,4 +152,5 @@ interface props {
 - ✅ 一键发布到阿里云OSS
 - ✅ 自定义页面模版文件
 - ✅ Github Actions自动化部署
+- ✅ 打通Gitalk评论
 
