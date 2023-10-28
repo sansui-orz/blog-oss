@@ -5,7 +5,7 @@ module.exports = {
   favicon: 'https://limaosheng.top/b.png', // tab图标，目前写死了png
   ICPCode: '', // 备案号，无则不显示
   githubAddress: '', // github地址，无则不显示
-  github: { // gitalk需要的信息
+  github: { // gitalk需要的信息，配置信息来源请参考 https://github.com/gitalk/gitalk#install
     clientID: '',
     clientSecret: '',
     repo: '',

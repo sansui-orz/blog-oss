@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx blog-oss build"
+    "build": "npx blog-oss build",
+    "deploy": "npx blog-oss deploy"
   },
   "repository": {
     "type": "git",
