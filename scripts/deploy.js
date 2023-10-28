@@ -27,7 +27,6 @@ program.option('-oid, --oss-access-key-id <ossAccessKeyId>', '阿里云OSS Acces
 async function run() {
   try {
     const options = program.opts();
-
     const config = await getConfig();
     const githubPersonalAccessToken = options.personalAccessToken || config.github.personalAccessToken;
     delete config.github.personalAccessToken;

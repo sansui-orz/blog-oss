@@ -8,7 +8,7 @@ const { readmeIsUndefined, parseArticleFail } = require('./errorLog');
 const readline = require('readline');
 const _crypto = require('crypto');
 const { once } = require('events');
-
+const renderArticle = require('./renderArticle')
 
 /**
  * @typedef { import('./types.js').ArticleInfo } ArticleInfo
@@ -24,12 +24,13 @@ const { once } = require('events');
 const matchArticleDetail = async (filepath, id) => {
   try {
     const res = await readFile(filepath);
+    
     const fileContent = res.toString();
     const createMatch = fileContent.match(/\[create\]:(\d{4})-(\d{2})-(\d{2})/);
     const [_, year, month, day] = createMatch || [];
-    const tagMatch = fileContent.match(/\[tag\]:(.+)[\n\r]/);
+    const tagMatch = /** @type {Array<string>} */(fileContent.match(/\[tag\]:(.+)[\n\r]/));
     const tags = tagMatch[1].split('|');
-    const title = fileContent.match(/^#\s(.*)/)[1];
+    const title = /** @type {Array<string>} */(fileContent.match(/^#\s(.*)/))[1];
     const menu = [];
     const rl = readline.createInterface({
       input: fs.createReadStream(filepath),
@@ -38,7 +39,7 @@ const matchArticleDetail = async (filepath, id) => {
     rl.on('line', (line) => {
       // 处理行。
       if (/^(#{2,4})\s(.*)/.test(line)) {
-        const match = line.match(/^(#{2,4})\s(.*)/);
+        const match = /** @type {Array<string>} */(line.match(/^(#{2,4})\s(.*)/));
         menu.push({
           title: match[2],
           level: match[1].length - 1,
@@ -47,8 +48,7 @@ const matchArticleDetail = async (filepath, id) => {
       }
     });
     await once(rl, 'close');
-    const contentHash = _crypto.createHash('md5').update(fileContent).digest('hex')
-    return {
+    const articleInfo = {
       year,
       month,
       day,
@@ -57,11 +57,19 @@ const matchArticleDetail = async (filepath, id) => {
       title,
       id,
       filepath,
-      contentHash: contentHash,
+      contentHash: '',
       // 使用id + contentHash + issues状态的方式决定内容是否变更
-      filename: `${id}-${contentHash}-0`, // 0: issues未初始化, 1: issues已初始化
-      hashId: `${id}-${contentHash}`
+      filename: '', // 0: issues未初始化, 1: issues已初始化
+      hashId: '',
+      html: ''
     };
+    const htmlContent = await renderArticle(filepath, articleInfo);
+    const contentHash = _crypto.createHash('md5').update(htmlContent).digest('hex')
+    articleInfo.contentHash = contentHash
+    articleInfo.html = htmlContent
+    articleInfo.filename = `${id}-${contentHash}-0`
+    articleInfo.hashId = `${id}-${contentHash}`
+    return articleInfo;
   } catch (error) {
     parseArticleFail(filepath, error);
     throw new Error('解析文章失败: ' + filepath);
@@ -75,15 +83,14 @@ const matchArticleDetail = async (filepath, id) => {
 exports.getMenuFromReadme = async () => {
   if (await getFileIfExist(path.resolve('README.md'))) {
     const listStr = await readFile(path.resolve('README.md'), { encoding: 'utf-8' });
-    const matchObj = listStr.match(/-\s\[.+\]\(.+\.md\)[\n\r]/g);
+    const matchObj = /** @type {Array<string>} */(listStr.match(/-\s\[.+\]\(.+\.md\)[\n\r]/g));
     const list = matchObj.map(async item => {
-      const _matchObj = item.match(/^-\s\[(.+)\]\((.+)\)/);
+      const  _matchObj = /** @type {Array<string>} */(item.match(/^-\s\[(.+)\]\((.+)\)/));
       const filepath = path.resolve(_matchObj[2]);
       const id = _crypto.createHash('md5').update(_matchObj[1]).digest('hex');
       const articleDetail = await matchArticleDetail(filepath, id);
 
       return {
-        id,
         ...articleDetail,
         filepath,
         title: _matchObj[1]

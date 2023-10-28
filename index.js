@@ -20,7 +20,7 @@ program
 
 
 program.command('deploy', '一键部署到阿里云OSS上', { executableFile: 'scripts/deploy.js' });
-program.command('build', '打包(markdown to html), 不会做初始化issues, 上传oss操作', { executableFile: 'scripts/build.js' });
+program.command('build', '打包(markdown to html), 不会做初始化issues与上传oss操作', { executableFile: 'scripts/build.js' });
 program.command('init <projectName>', '初始化项目', { executableFile: 'scripts/init.js' }).alias('i');
 
 
