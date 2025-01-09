@@ -9,6 +9,7 @@ const chalk = require('chalk');
 const ejs2html = require('../utils/ejs2html');
 const getConfig = require('../utils/getConfig');
 const updateImages = require('../utils/updateImages');
+const uploadStaticPages = require('../utils/uploadStaticPage');
 const {
   accessKeyIdIsUndefined,
   accessKeySecretIsUndefined,
@@ -70,6 +71,7 @@ async function run() {
     console.log(chalk.green('文章部署成功，开始上传图片资源'));
     await updateImages();
     console.log(chalk.green('图片资源已上传!'));
+    await uploadStaticPages();
     console.log(chalk.green('博客部署完成!'));
   } catch (error) {
     deployFail(error);
